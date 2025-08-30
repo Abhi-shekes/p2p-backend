@@ -1,0 +1,79 @@
+# -------------------------
+# Node.js / Backend
+# -------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+*.log.*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage / testing
+coverage/
+.nyc_output/
+
+# Build outputs
+dist/
+build/
+.cache/
+.next/
+out/
+
+# -------------------------
+# React + Vite / Frontend
+# -------------------------
+# Dependency directories
+frontend/node_modules/
+backend/node_modules/
+
+# Vite build
+frontend/dist/
+*.tsbuildinfo
+
+# Local dev tools
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# -------------------------
+# Misc
+# -------------------------
+*.tgz
+*.zip
+*.tar.gz
+*.rar
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Editor backups
+*~
+
+# -------------------------
+# System files
+# -------------------------
+Thumbs.db
+.DS_Store
