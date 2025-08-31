@@ -19,7 +19,7 @@ const missingEnvVars = requiredEnvVars.filter((key) => !process.env[key]);
 const PORT = Number(process.env.PORT) || 4000;
 const HOST = process.env.HOST || "0.0.0.0";
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "http://localhost:3000";
-const TOKEN_TTL_MS = Number(process.env.TOKEN_TTL_MS) || 10 * 60 * 1000; // 10 minutes
+const TOKEN_TTL_MS = Number(process.env.TOKEN_TTL_MS) || 30 * 60 * 1000; // Increased to 30 minutes for better usability
 const TOKEN_LENGTH = 16; // Increased for better security
 const SSL_KEY_PATH = process.env.SSL_KEY_PATH || "";
 const SSL_CERT_PATH = process.env.SSL_CERT_PATH || "";
@@ -191,6 +191,8 @@ if (SSL_KEY_PATH && SSL_CERT_PATH && fs.existsSync(SSL_KEY_PATH) && fs.existsSyn
 const io = new SocketIOServer(server, {
   cors: { origin: ALLOWED_ORIGIN, methods: ["GET", "POST"] },
   allowEIO3: false,
+  pingInterval: 10000,
+  pingTimeout: 5000,
 });
 
 // Socket.IO rate limiter
@@ -342,5 +344,4 @@ server.listen(PORT, HOST, () => {
     }
   }, 9 * 60 * 1000);
 });
-
 
