@@ -156,6 +156,10 @@ const apiLimiter = rateLimit({
     });
   },
 });
+app.get("/api/keep-alive", (req, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
+});
+
 
 
 app.get("/api/health", (req, res) => {
@@ -319,7 +323,24 @@ process.on("unhandledRejection", (reason) => {
   logger.error(`Unhandled Rejection: ${reason}`);
 });
 
+
+
 server.listen(PORT, HOST, () => {
-  logger.info(`[signaling] Listening on ${SSL_KEY_PATH && SSL_CERT_PATH ? "https" : "http"}://${HOST}:${PORT}, Memory: ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`);
+  logger.info(`[signaling] Listening on ${SSL_KEY_PATH && SSL_CERT_PATH ? "https" : "http"}://${HOST}:${PORT}`);
   logger.info(`[signaling] CORS allowed origin: ${ALLOWED_ORIGIN}`);
+
+  // Self ping setup
+  const SELF_URL = `${SSL_KEY_PATH && SSL_CERT_PATH ? "https" : "http"}://${HOST}:${PORT}/api/keep-alive`;
+
+  setInterval(async () => {
+    try {
+      const res = await fetch(SELF_URL);
+      const data = await res.json();
+      logger.info(`[keep-alive] Self-ping successful at ${data.time}`);
+    } catch (err) {
+      logger.error(`[keep-alive] Self-ping failed: ${err.message}`);
+    }
+  }, 1 * 60 * 1000);
 });
+
+
