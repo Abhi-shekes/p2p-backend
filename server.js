@@ -340,7 +340,7 @@ server.listen(PORT, HOST, () => {
     } catch (err) {
       logger.error(`[keep-alive] Self-ping failed: ${err.message}`);
     }
-  }, 1 * 60 * 1000);
+  }, 9 * 60 * 1000);
 });
 
 
